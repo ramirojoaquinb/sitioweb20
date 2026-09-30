@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbería Demo · Corte y barba | Reservá por WhatsApp</title>
+<meta name="description" content="Barbería demo. Corte, barba, perfilado de cejas. Lun a Sáb 10–20. Reservá tu turno por WhatsApp.">
+<meta name="theme-color" content="#141210">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💈</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #141210; --bg2: #1D1A16; --card: #211D18; --card2: #292420;
+    --ink: #F2EDE4; --soft: #B9B0A3; --muted: #8A8276;
+    --gold: #C9A227; --gold-soft: #EAD9A8; --border: #38322B;
+    --radius: 16px; --shadow: 0 10px 32px -12px rgba(0,0,0,.6);
+    --max: 960px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; color: var(--ink);
+    background: radial-gradient(700px 320px at 50% -10%, #2B251D 0%, var(--bg) 60%) fixed, var(--bg);
+    display: flex; justify-content: center; padding: 0 16px 96px; line-height: 1.55; }
+  .wrap { width: 100%; max-width: var(--max); }
+  .hero { text-align: center; padding: 44px 8px 18px; }
+  .logo { width: 72px; height: 72px; margin: 0 auto 12px; border-radius: 50%; background: linear-gradient(140deg, var(--gold), #8A6D15);
+    display: flex; align-items: center; justify-content: center; font-size: 34px; box-shadow: var(--shadow); }
+  .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .pill { font-size: .78rem; font-weight: 600; border: 1px solid var(--border); background: rgba(255,255,255,.04); color: var(--soft); border-radius: 999px; padding: 5px 13px; }
+  .pill.open { background: #2E7D4F; border-color: #2E7D4F; color: #fff; }
+  .pill.gold { color: var(--gold-soft); border-color: #5A4E1F; }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 5vw, 2.8rem); margin: 0 0 4px; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero p.tag { color: var(--soft); margin: 0 0 8px; }
+  .hero-meta { color: var(--muted); font-size: .88rem; }
+  .hero-meta b { color: var(--ink); }
+  .grid { display: grid; gap: 18px; margin-top: 20px; grid-template-columns: 1fr; }
+  @media (min-width: 880px) { .grid { grid-template-columns: 1.05fr .95fr; align-items: start; } .sticky { position: sticky; top: 16px; } }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+  .card.gold-card { background: linear-gradient(160deg, #2A241A, #1D1A14); border-color: #5A4E1F; }
+  .card h2 { font-family: 'Fraunces', serif; margin: 0 0 4px; font-size: 1.3rem; }
+  .sub { color: var(--muted); font-size: .88rem; margin: 0 0 14px; }
+  .kicker { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  .serv { display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: 12px; padding: 13px 15px; margin-bottom: 10px; background: var(--card2); }
+  .serv.dest { border-color: var(--gold); position: relative; }
+  .serv .tag-top { position: absolute; top: -10px; left: 14px; background: var(--gold); color: #141210; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; border-radius: 999px; padding: 2px 10px; }
+  .serv .nombre { font-weight: 600; } .serv .detalle { display: block; font-size: .8rem; color: var(--muted); font-weight: 400; }
+  .serv .precio { color: var(--gold-soft); font-weight: 700; white-space: nowrap; }
+  .serv button { border: 1.5px solid var(--gold); background: transparent; color: var(--gold-soft); border-radius: 999px; font: inherit; font-size: .8rem; font-weight: 600; padding: 7px 14px; cursor: pointer; white-space: nowrap; }
+  .serv button:hover { background: var(--gold); color: #141210; }
+  .horas { list-style: none; padding: 0; margin: 0; }
+  .horas li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: .93rem; color: var(--soft); }
+  .horas li:last-child { border: 0; }
+  .horas li span:last-child { color: var(--ink); font-weight: 600; }
+  .links { display: grid; gap: 10px; }
+  .links a { display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; color: var(--ink); border: 1px solid var(--border); border-radius: 12px; padding: 13px; font-weight: 500; background: rgba(255,255,255,.02); }
+  .links a:hover { border-color: var(--gold); }
+  .links a.primary { background: var(--gold); color: #141210; border-color: var(--gold); font-weight: 700; }
+  label { display: block; font-size: .83rem; color: var(--soft); margin: 12px 0 5px; font-weight: 500; }
+  input, select { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 11px 12px; font: inherit; background: #14110E; color: var(--ink); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  button.cta { width: 100%; margin-top: 16px; background: var(--gold); color: #141210; border: none; border-radius: 12px; padding: 15px; font-weight: 700; font-size: 1rem; cursor: pointer; }
+  button.cta:disabled { opacity: .6; cursor: wait; }
+  .fine { font-size: .78rem; color: var(--muted); text-align: center; margin: 10px 0 0; }
+  #resumen { display: none; margin-top: 14px; background: rgba(201,162,39,.1); border: 1px dashed var(--gold); border-radius: 10px; padding: 12px; font-size: .9rem; }
+  footer { text-align: center; color: var(--muted); font-size: .75rem; margin-top: 26px; }
+  .wa-float { position: fixed; right: 16px; bottom: 16px; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; text-decoration: none; box-shadow: 0 8px 26px rgba(0,0,0,.4); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="logo">💈</div>
+    <div class="badges">
+      <span class="pill" id="estadoAbierto">● comprobando horario…</span>
+      <span class="pill gold">★ 4.9 · 180 reseñas (demo)</span>
+      <span class="pill">Sin espera con turno</span>
+    </div>
+    <h1 id="nombreNegocio">Barbería <em>Demo</em></h1>
+    <p class="tag" id="tagline">Corte · Barba · Perfilado — estilo clásico y urbano</p>
+    <div class="hero-meta">📍 <b id="dirCorta">Av. Demo 1234, Caseros</b> · 🕒 <b id="hoyHorario">Lun a Sáb 10–20</b></div>
+  </header>
+
+  <div class="grid">
+    <div style="display:grid;gap:18px">
+      <section class="card">
+        <span class="kicker">Precios demo — tocá para reservar</span>
+        <h2>Servicios</h2>
+        <p class="sub">Precios de ejemplo. Pasame los reales y los actualizo.</p>
+        <div id="servs"></div>
+      </section>
+
+      <section class="card">
+        <span class="kicker">Grilla semanal</span>
+        <h2>Horarios</h2>
+        <p class="sub">Reservá y vení directo, sin espera.</p>
+        <ul class="horas">
+          <li><span>Lunes a Viernes</span><span>10:00–20:00</span></li>
+          <li><span>Sábado</span><span>10:00–20:00</span></li>
+          <li><span>Domingo</span><span>Cerrado</span></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <span class="kicker">El local</span>
+        <h2>Dónde estamos</h2>
+        <p class="sub" id="dirLarga">Av. Demo 1234, Caseros — a 3 cuadras de la estación.</p>
+        <div class="links">
+          <a id="linkMapa" href="https://maps.google.com/?q=Av.+Demo+1234+Caseros" target="_blank" rel="noopener">📍 Cómo llegar en Maps</a>
+        </div>
+      </section>
+
+      <section class="card">
+        <span class="kicker">Comunidad</span>
+        <h2>Redes y contacto</h2>
+        <p class="sub">Mirá trabajos reales y reservá tu lugar.</p>
+        <div class="links">
+          <a id="linkResena" href="https://maps.google.com/?q=Av.+Demo+1234+Caseros" target="_blank" rel="noopener">⭐ Dejar una reseña en Google</a>
+          <a id="linkInstagram" href="https://instagram.com/barberia.demo" target="_blank" rel="noopener">📸 Instagram</a>
+          <a id="linkTelefono" href="tel:+5491100000000">📞 Llamar a la barbería</a>
+        </div>
+      </section>
+    </div>
+
+    <main>
+      <section class="card gold-card sticky" id="reserva">
+        <span class="kicker">Turno en 30 segundos</span>
+        <h2>Reservá tu silla</h2>
+        <p class="sub">Sin seña · Te confirmamos por WhatsApp.</p>
+        <form id="form" novalidate>
+          <label for="nombre">Tu nombre</label>
+          <input id="nombre" placeholder="Ej: Diego" minlength="2" maxlength="60">
+          <label for="serv">Servicio</label>
+          <select id="serv"></select>
+          <div class="row2">
+            <div>
+              <label for="fecha">Fecha</label>
+              <input type="date" id="fecha">
+            </div>
+            <div>
+              <label for="hora">Hora</label>
+              <input type="time" id="hora">
+            </div>
+          </div>
+          <div id="resumen" aria-live="polite"></div>
+          <button class="cta" type="submit" id="btn">Reservar por WhatsApp</button>
+          <p class="fine">Se abre WhatsApp con el mensaje ya armado.</p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <footer><span id="foot">Barbería Demo</span> · Página demo — pasame los datos reales y la actualizo</footer>
+</div>
+
+<a class="wa-float" id="waFloat" href="https://wa.me/5491100000000" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<script>
+'use strict';
+/* ===== CONFIG DEMO ===== */
+const CONFIG = {
+  nombre: "Barbería Demo",
+  tagline: "Corte · Barba · Perfilado — estilo clásico y urbano",
+  whatsapp: "5491100000000",
+  telefonoDisplay: "+54 9 11 0000-0000",
+  dirCorta: "Av. Demo 1234, Caseros",
+  dirLarga: "Av. Demo 1234, Caseros — a 3 cuadras de la estación.",
+  maps: "https://maps.google.com/?q=Av.+Demo+1234+Caseros",
+  resena: "https://maps.google.com/?q=Av.+Demo+1234+Caseros",
+  instagram: "https://instagram.com/barberia.demo",
+  servicios: [
+    { nombre: "Corte clásico", detalle: "Tijera + máquina · ~40 min", precio: "$12.000" },
+    { nombre: "Corte + barba", detalle: "El combo completo · ~60 min", precio: "$20.000", destacado: true },
+    { nombre: "Solo barba", detalle: "Perfilado + toalla caliente", precio: "$9.000" },
+    { nombre: "Perfilado de cejas", detalle: "Detalle final · 15 min", precio: "$4.000" }
+  ]
+};
+const $ = (id) => document.getElementById(id);
+document.title = CONFIG.nombre + " · Reservá por WhatsApp";
+$("nombreNegocio").innerHTML = "";
+$("nombreNegocio").append(CONFIG.nombre.split(" ")[0] + " ");
+const em = document.createElement("em"); em.textContent = CONFIG.nombre.split(" ").slice(1).join(" ") || "Demo";
+$("nombreNegocio").append(em);
+$("tagline").textContent = CONFIG.tagline;
+$("dirCorta").textContent = CONFIG.dirCorta;
+$("dirLarga").textContent = CONFIG.dirLarga;
+$("foot").textContent = CONFIG.nombre;
+$("linkMapa").href = CONFIG.maps;
+$("linkResena").href = CONFIG.resena;
+$("linkInstagram").href = CONFIG.instagram;
+$("linkTelefono").href = "tel:+" + CONFIG.whatsapp;
+$("linkTelefono").textContent = "📞 Llamar al " + CONFIG.telefonoDisplay;
+$("waFloat").href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent("Hola " + CONFIG.nombre + "! Quiero un turno.");
+
+const box = $("servs"), sel = $("serv");
+let elegido = CONFIG.servicios[1].nombre;
+CONFIG.servicios.forEach((s) => {
+  const d = document.createElement("div"); d.className = "serv" + (s.destacado ? " dest" : "");
+  if (s.destacado) { const t = document.createElement("span"); t.className = "tag-top"; t.textContent = "Más pedido"; d.append(t); }
+  const l = document.createElement("div");
+  const n = document.createElement("div"); n.className = "nombre"; n.textContent = s.nombre;
+  const dt = document.createElement("span"); dt.className = "detalle"; dt.textContent = s.detalle;
+  n.append(dt); l.append(n);
+  const p = document.createElement("div"); p.className = "precio"; p.textContent = s.precio;
+  const b = document.createElement("button"); b.type = "button"; b.textContent = "Elegir";
+  b.setAttribute("aria-label", "Reservar " + s.nombre);
+  b.addEventListener("click", () => { elegido = s.nombre; sel.value = s.nombre; actualiza(); $("reserva").scrollIntoView({ behavior: "smooth", block: "center" }); });
+  d.append(l, p, b); box.append(d);
+  const o = document.createElement("option"); o.value = s.nombre; o.textContent = s.nombre + " · " + s.precio; sel.append(o);
+});
+sel.value = elegido;
+sel.addEventListener("change", () => { elegido = sel.value; actualiza(); });
+
+function hoyISO() { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+$("fecha").min = hoyISO();
+
+function abierto(d = new Date()) {
+  if (d.getDay() === 0) return false;
+  const h = d.getHours() + d.getMinutes()/60;
+  return h >= 10 && h < 20;
+}
+function pinta() {
+  const el = $("estadoAbierto");
+  const ok = abierto();
+  el.textContent = ok ? "● Abierto ahora" : "● Cerrado ahora";
+  el.classList.toggle("open", ok);
+}
+pinta(); setInterval(pinta, 60000);
+
+function actualiza() {
+  const b = $("resumen"), n = $("nombre").value.trim();
+  if (!n || !$("fecha").value || !$("hora").value) { b.style.display = "none"; return; }
+  b.style.display = "block"; b.textContent = "";
+  b.append("Turno: ");
+  const s = document.createElement("b");
+  s.textContent = elegido + " · " + $("fecha").value + " " + $("hora").value + " · " + n;
+  b.append(s);
+}
+["nombre","fecha","hora"].forEach(id => $(id).addEventListener("input", actualiza));
+
+$("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const n = $("nombre");
+  if (n.value.trim().length < 2) { n.focus(); return; }
+  if (!$("fecha").value || !$("hora").value) { ($("fecha").value ? $("hora") : $("fecha")).focus(); return; }
+  const btn = $("btn");
+  btn.disabled = true; btn.textContent = "Abriendo WhatsApp…";
+  const msg = "Hola " + CONFIG.nombre + "! Soy " + n.value.trim() + ". Quiero reservar " + elegido + " el " + $("fecha").value + " a las " + $("hora").value + " hs. Gracias!";
+  window.open("https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+  setTimeout(() => { btn.disabled = false; btn.textContent = "Reservar por WhatsApp"; }, 1500);
+});
+</script>
+</body>
+</html>
