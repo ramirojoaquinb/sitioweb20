@@ -216,6 +216,12 @@ sel.addEventListener("change", () => { elegido = sel.value; actualiza(); });
 function hoyISO() { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
 $("fecha").min = hoyISO();
 
+/* Abrir el calendario/reloj nativo al tocar (en algunos navegadores del celu el toque solo enfoca) */
+["fecha", "hora"].forEach(function (id) {
+  const el = $(id);
+  el.addEventListener("click", function () { try { el.showPicker(); } catch (e) {} });
+});
+
 function abierto(d = new Date()) {
   if (d.getDay() === 0) return false;
   const h = d.getHours() + d.getMinutes()/60;
